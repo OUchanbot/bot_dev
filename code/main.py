@@ -1,6 +1,7 @@
 # coding: utf_8
 import discord
 import random
+import time
 client = discord.Client()
 
 @client.event
@@ -11,60 +12,53 @@ async def on_ready():
 	print('------')
 
 
+message_cnt = 0
+start = time.time()
 @client.event
 async def on_message(message):
 	if client.user != message.author:
 		user_name = str(message.author)
 		pos = user_name.find('#')
-		if user_name[pos:] == "#3334" and random.random() < 0.25:
+		message_size = len(message.content)
+
+		global message_cnt
+		global start
+		message_cnt += 1
+		print(start)
+		if message_cnt == 6:
+			end = time.time()
+			message_cnt = 0
+			start = time.time()
+			if end - start < 60.0:
+				m = "今日は賑やかやなぁ。おーちゃんも混ぜてや"
+				await message.channel.send(m)
+				
+	
+		if user_name[pos:] == "#3334" and random.random() < 0.15:
 			await message.channel.send("うるせえジジイ")
 
-	if message.content[:int(len(message.content)/2)] == message.content[int(len(message.content)/2)] and int(len(message.content)/2) >= 3:
-	#if message.content[:int(len(message.content)/2)] == message.content[int(len(message.content)/2)]:
-		if client.user != message.author:
+		if message.content == "!LVUP":
+			m = "/nick おーちゃんLV30"
+			await message.channel.send(m)
+
+		if message.content[:int(message_size/2)] == message.content[int(message_size/2):] and int(message_size/2) >= 3:
 			m = "二回すなあ！"
 			await message.channel.send(m)
-		
-	# 「おはよう」で始まるか調べる
-	if message.content.startswith("おはよう"):
-		# 送り主がBotだった場合反応したくないので
-		if client.user != message.author:
-			# メッセージを書きます
-			m = "おはようございます" + message.author.name + "さん！"
-			# メッセージが送られてきたチャンネルへメッセージを送ります
-			await message.channel.send(m)
-
-	if message.content.startswith("おやすみ"):
-		# 送り主がBotだった場合反応したくないので
-		if client.user != message.author:
-			# メッセージを書きます
+		elif message.content.startswith("おはよう"): #「おはよう」で始まるか調べる
+			m = "おはようございます" + message.author.name + "さん！" # メッセージを書きます
+			await message.channel.send(m) # メッセージが送られてきたチャンネルへメッセージを送ります
+		elif message.content.startswith("おやすみ"):
 			m = "おやすみ" + message.author.name + "さん！"
-			# メッセージが送られてきたチャンネルへメッセージを送ります
 			await message.channel.send(m)
-
-	if message.content.startswith("うさめるうは"):
-		# 送り主がBotだった場合反応したくないので
-		if client.user != message.author:
-			# メッセージを書きます
+		elif message.content.startswith("うさめるうは"):
 			m = "クソジジイ"
-			# メッセージが送られてきたチャンネルへメッセージを送ります
 			await message.channel.send(m)
-
-	if message.content.startswith("なっちゃん"):
-		# 送り主がBotだった場合反応したくないので
-		if client.user != message.author:
-			# メッセージを書きます
+		elif message.content.startswith("なっちゃん"):
 			m = "ピータン"
-			# メッセージが送られてきたチャンネルへメッセージを送ります
 			await message.channel.send(m)
-	if message.content.startswith("あず"):
-		# 送り主がBotだった場合反応したくないので
-		if client.user != message.author:
-			# メッセージを書きます
-			#m = "ねえ笑笑笑笑"
-			m = "ねえwww"
-			# メッセージが送られてきたチャンネルへメッセージを送ります
+		elif message.content.startswith("あず"):
+			m = "ねえ笑笑笑笑"
 			await message.channel.send(m)
+	
 
-
-client.run("NjQ5MDI2NzE4MDI3NDgxMTQ2.Xd6jiw.8lXx71d5a3tMIc4rO7uhxkNOgMw")
+client.run("NjQ5MDI2NzE4MDI3NDgxMTQ2.Xd62DA._RXiIjUjWcwlEzaJTH-bnkh3Urk")
