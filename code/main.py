@@ -44,6 +44,8 @@ async def on_message(message):
 			await message.channel.send("おう、またな")
 		if user_id == "#3334" and random.random() < 0.15:
 			await message.channel.send("うるせえジジイ")
+		if user_id == "#3882" and random.random() < 0.15:
+			await message.channel.send("お、またナンパしとるんか？？")
 
 		if message.content == "!LVUP":
 			m = "/nick おーちゃんLV30"
