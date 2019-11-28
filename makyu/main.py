@@ -67,4 +67,4 @@ async def on_message(message):
 #with open(path) as f:
 #	token = f.read().rstrip('\n')
 #client.run(token)
-client.run("NjQ5NjI5OTYxMTM2NjM1OTA1.Xd_oDA.DphwrowTJ5lrYyLPIRhlvzoVge4")
+
