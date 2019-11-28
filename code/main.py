@@ -14,27 +14,35 @@ async def on_ready():
 
 message_cnt = 0
 start = time.time()
+old_id = ""
 @client.event
 async def on_message(message):
 	if client.user != message.author:
 		user_name = str(message.author)
 		pos = user_name.find('#')
+		user_id = user_name[pos:]
 		message_size = len(message.content)
 
 		global message_cnt
 		global start
-		message_cnt += 1
-		print(start)
-		if message_cnt == 6:
-			end = time.time()
-			message_cnt = 0
+		global old_id
+		if user_id != old_id:
+			message_cnt += 1
+		old_id = user_id
+		print(message_cnt)
+		if time.time() - start > 60:
 			start = time.time()
-			if end - start < 60.0:
-				m = "今日は賑やかやなぁ。おーちゃんも混ぜてや"
-				await message.channel.send(m)
+			message_cnt = 0
+		elif message_cnt == 6:
+			start = time.time()
+			message_cnt = 0
+			m = "今日は賑やかやなぁ。おーちゃんも混ぜてや"
+			await message.channel.send(m)
 				
 	
-		if user_name[pos:] == "#3334" and random.random() < 0.15:
+		if message.content == "バイバイ":
+			await message.channel.send("おう、またな")
+		if user_id == "#3334" and random.random() < 0.15:
 			await message.channel.send("うるせえジジイ")
 
 		if message.content == "!LVUP":
@@ -61,4 +69,4 @@ async def on_message(message):
 			await message.channel.send(m)
 	
 
-client.run("NjQ5MDI2NzE4MDI3NDgxMTQ2.Xd62DA._RXiIjUjWcwlEzaJTH-bnkh3Urk")
+client.run("NjQ5MDI2NzE4MDI3NDgxMTQ2.Xd8_Ww.xIpA0PbaUYzoSC3FA_QWXRd7VYQ")
